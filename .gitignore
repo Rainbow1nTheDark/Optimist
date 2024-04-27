@@ -18,9 +18,7 @@ node_modules
 # IDE
 .vscode
 .idea
+.vercel
 packages/hardhat/deployments/optimismSepolia/.chainId
 packages/hardhat/deployments/optimismSepolia/DappRaterSchemaResolver.json
 packages/hardhat/deployments/optimismSepolia/solcInputs/d415057fd74441cb9f9f26ddb0159806.json
-
-# cli
-dist
