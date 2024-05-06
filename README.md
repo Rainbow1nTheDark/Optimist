@@ -1,81 +1,28 @@
-# 🏗 Scaffold-ETH 2
+# **Optimist: A Trust-Oriented Dapp Rating System on Optimism**
 
-<h4 align="center">
-  <a href="https://docs.scaffoldeth.io">Documentation</a> |
-  <a href="https://scaffoldeth.io">Website</a>
-</h4>
+## **Introduction**
 
-🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on the Ethereum blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
+Optimist is a decentralized application (Dapp) built on the Optimism blockchain, designed to enhance transparency and trust within the Web3 ecosystem. It enables users to rate and review decentralized applications, fostering a community-driven reputation system that helps users make informed decisions about which Dapps to trust and use.
 
-⚙️ Built using NextJS, RainbowKit, Hardhat, Wagmi, Viem, and Typescript.
+## **Why Optimist?**
 
-- ✅ **Contract Hot Reload**: Your frontend auto-adapts to your smart contract as you edit it.
-- 🪝 **[Custom hooks](https://docs.scaffoldeth.io/hooks/)**: Collection of React hooks wrapper around [wagmi](https://wagmi.sh/) to simplify interactions with smart contracts with typescript autocompletion.
-- 🧱 [**Components**](https://docs.scaffoldeth.io/components/): Collection of common web3 components to quickly build your frontend.
-- 🔥 **Burner Wallet & Local Faucet**: Quickly test your application with a burner wallet and local faucet.
-- 🔐 **Integration with Wallet Providers**: Connect to different wallet providers and interact with the Ethereum network.
+The Web3 space is rapidly growing with numerous Dapps available to users. However, this vast array often leaves users overwhelmed and uncertain about the security, reliability, and trustworthiness of these applications. Optimist addresses this challenge by leveraging the Ethereum Attestation Service (EAS), providing a platform where community feedback not only leads the way in determining the trustworthiness of Dapps and their decisions but also serves as a crucial component for the continuous improvement of these applications. By facilitating a constant feedback loop and utilizing the robust capabilities of EAS for secure and verifiable attestations, Optimist empowers developers to refine and enhance their offerings based on real user experiences and insights.
+## **Features**
 
-![Debug Contracts tab](https://github.com/scaffold-eth/scaffold-eth-2/assets/55535804/b237af0c-5027-4849-a5c1-2e31495cccb1)
+- **Home Page**: Displays a list of registered Dapps along with their community ratings. Users can search and filter through the list to find applications of interest.
+- **Dapp Registration**: Allows users to register new Dapps on the platform, ensuring the database is continually updated with the latest applications.
+- **Dapp Rating and Reviews**: Users can leave detailed reviews and rate Dapps, contributing to the overall trust score of each application.
+- **My Reviews**: Users can view and manage their review history, with options to update or delete their past contributions.
 
-## Requirements
+## **Future Directions**
 
-Before you begin, you need to install the following tools:
+- **Governance Integration**: The next phase includes incorporating features to review and rate governance proposals directly on Optimism. This extension will empower users to actively participate in the governance processes of their favorite Dapps.
+- **Cross-Blockchain Support**: Optimist is already equipped to support applications across various blockchains. While our initial focus has been on Optimism and Ethereum, our platform is designed to serve the broader Web3 community, enhancing the transparency and reliability of Dapps across different blockchain ecosystems.
 
-- [Node (>= v18.17)](https://nodejs.org/en/download/)
-- Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
-- [Git](https://git-scm.com/downloads)
+## **Contribution and Community**
 
-## Quickstart
+Optimist is an open-source project, and community contributions are highly valued. Whether you're a developer, writer, or enthusiast, your input is welcome! Please check out our [issues tracker](todo) for current tasks or submit new suggestions [here](todo).
 
-To get started with Scaffold-ETH 2, follow the steps below:
+## **Contact Us**
 
-1. Clone this repo & install dependencies
-
-```
-git clone https://github.com/scaffold-eth/scaffold-eth-2.git
-cd scaffold-eth-2
-yarn install
-```
-
-2. Run a local network in the first terminal:
-
-```
-yarn chain
-```
-
-This command starts a local Ethereum network using Hardhat. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `hardhat.config.ts`.
-
-3. On a second terminal, deploy the test contract:
-
-```
-yarn deploy
-```
-
-This command deploys a test smart contract to the local network. The contract is located in `packages/hardhat/contracts` and can be modified to suit your needs. The `yarn deploy` command uses the deploy script located in `packages/hardhat/deploy` to deploy the contract to the network. You can also customize the deploy script.
-
-4. On a third terminal, start your NextJS app:
-
-```
-yarn start
-```
-
-Visit your app on: `http://localhost:3000`. You can interact with your smart contract using the `Debug Contracts` page. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
-
-**What's next**:
-
-- Edit your smart contract `YourContract.sol` in `packages/hardhat/contracts`
-- Edit your frontend homepage at `packages/nextjs/app/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
-- Edit your deployment scripts in `packages/hardhat/deploy`
-- Edit your smart contract test in: `packages/hardhat/test`. To run test use `yarn hardhat:test`
-
-## Documentation
-
-Visit our [docs](https://docs.scaffoldeth.io) to learn how to start building with Scaffold-ETH 2.
-
-To know more about its features, check out our [website](https://scaffoldeth.io).
-
-## Contributing to Scaffold-ETH 2
-
-We welcome contributions to Scaffold-ETH 2!
-
-Please see [CONTRIBUTING.MD](https://github.com/scaffold-eth/scaffold-eth-2/blob/main/CONTRIBUTING.md) for more information and guidelines for contributing to Scaffold-ETH 2.
+For support or further inquiries, reach us at alexanderbalandin@yahoo.com or join our community on [Discord](todo).
