@@ -6,8 +6,7 @@ Optimist is a decentralized application (Dapp) built on the Optimism blockchain,
 
 ## **Why Optimist?**
 
-The Web3 space is rapidly growing with numerous Dapps available to users. However, this vast array often leaves users overwhelmed and uncertain about the security, reliability, and **trustworthiness of these applications**. Optimist addresses this challenge by providing a platform where community feedback leads the way in determining the **trustworthiness of Dapps and their decisions**.
-
+The Web3 space is rapidly growing with numerous Dapps available to users. However, this vast array often leaves users overwhelmed and uncertain about the security, reliability, and trustworthiness of these applications. Optimist addresses this challenge by leveraging the Ethereum Attestation Service (EAS), providing a platform where community feedback not only leads the way in determining the trustworthiness of Dapps and their decisions but also serves as a crucial component for the continuous improvement of these applications. By facilitating a constant feedback loop and utilizing the robust capabilities of EAS for secure and verifiable attestations, Optimist empowers developers to refine and enhance their offerings based on real user experiences and insights.
 ## **Features**
 
 - **Home Page**: Displays a list of registered Dapps along with their community ratings. Users can search and filter through the list to find applications of interest.
