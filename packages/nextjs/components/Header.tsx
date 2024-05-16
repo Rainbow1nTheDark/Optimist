@@ -4,7 +4,7 @@ import React, { useCallback, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Bars3Icon, DocumentPlusIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, DocumentDuplicateIcon, DocumentPlusIcon } from "@heroicons/react/24/outline";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
 
@@ -23,6 +23,11 @@ export const menuLinks: HeaderMenuLink[] = [
     label: "Register Project",
     href: "/register-project",
     icon: <DocumentPlusIcon className="h-4 w-4 text-red-500" />,
+  },
+  {
+    label: "My Reviews",
+    href: "/my-reviews",
+    icon: <DocumentDuplicateIcon className="h-4 w-4 text-red-500" />,
   },
 ];
 

@@ -1,7 +1,15 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { DappRegistered, fetchGraphQLRegisteredDapps } from "~~/utils/graphQL/fetchFromSubgraph";
+import Link from "next/link";
+import {
+  DappRating,
+  DappRegistered,
+  fetchDappRatings,
+  fetchGraphQLRegisteredDapps,
+} from "~~/utils/graphQL/fetchFromSubgraph";
+
+type RatingsMap = { [dappId: string]: number };
 
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -14,16 +22,31 @@ const Home = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const result = await fetchGraphQLRegisteredDapps();
-        if (result && result.data) {
-          setAllDapps(result.data.dappRegistereds);
-          setDapps(result.data.dappRegistereds);
-          setError("");
+        const dappResult = await fetchGraphQLRegisteredDapps();
+        let ratingsMap: RatingsMap = {};
+
+        if (dappResult && dappResult.data) {
+          try {
+            const ratingsData = await fetchDappRatings();
+            if (ratingsData && ratingsData.data) {
+              console.log(ratingsData.data.dappRatingSubmitteds);
+              ratingsMap = computeAverageRatings(ratingsData.data.dappRatingSubmitteds);
+            }
+          } catch (ratingsError) {
+            console.error("Error fetching ratings:", ratingsError);
+          }
+
+          const enrichedDapps = dappResult.data.dappRegistereds.map(dapp => ({
+            ...dapp,
+            averageRating: ratingsMap[dapp.dappId] ?? 0,
+          }));
+          setAllDapps(enrichedDapps);
+          setDapps(enrichedDapps);
         } else {
-          setError("No data returned");
+          setError("No DApp data returned");
         }
       } catch (err) {
-        setError("An error occurred while fetching data");
+        setError("An error occurred while fetching DApp data");
         console.error(err);
       } finally {
         setLoading(false);
@@ -37,6 +60,36 @@ const Home = () => {
     const filteredDapps = allDapps?.filter(dapp => dapp.name.toLowerCase().includes(searchTerm.toLowerCase()));
     setDapps(filteredDapps);
   }, [searchTerm, allDapps]);
+
+  function computeAverageRatings(submittedRatings: DappRating[]): RatingsMap {
+    const ratings: RatingsMap = {};
+    const counts: { [key: string]: number } = {};
+
+    submittedRatings.forEach(({ dappId, starRating }) => {
+      if (ratings[dappId]) {
+        ratings[dappId] += starRating;
+        counts[dappId] += 1;
+      } else {
+        ratings[dappId] = starRating;
+        counts[dappId] = 1;
+      }
+    });
+
+    for (const dappId in ratings) {
+      ratings[dappId] = ratings[dappId] / counts[dappId];
+    }
+
+    return ratings;
+  }
+
+  const renderStars = (averageRating: number) => {
+    const roundedRating = Math.round(averageRating);
+    return [...Array(5)].map((_, i) => (
+      <span key={i} style={{ color: i < roundedRating ? "red" : "grey" }}>
+        ★
+      </span>
+    ));
+  };
 
   return (
     <>
@@ -74,6 +127,7 @@ const Home = () => {
                 >
                   <h3 className="font-semibold text-lg text-center">{dapp.name}</h3>
                   <p className="text-center mb-4">{dapp.description}</p>
+                  <div className="text-red-500">{renderStars(dapp.averageRating ?? 0)}</div>
                   <div className="flex justify-between items-center w-full mt-2">
                     <a href={dapp.url} className="text-blue-500 hover:underline">
                       Visit Site
@@ -86,7 +140,15 @@ const Home = () => {
               ))}
             </div>
           ) : (
-            <p>No registered DApps found.</p>
+            <div className="text-center mt-4">
+              <p>
+                Can&apos;t find what you&apos;re looking for?{" "}
+                <Link href="/register-project" className="text-red-500 hover:underline">
+                  Register a new project
+                </Link>
+                .
+              </p>
+            </div>
           )}
         </div>
       </div>

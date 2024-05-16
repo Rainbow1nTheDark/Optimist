@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "@ethereum-attestation-service/eas-contracts": "^1.4.1",
-    "axios": "^1.6.8"
+    "axios": "^1.6.8",
+    "dotenv": "^16.4.5"
   }
 }
