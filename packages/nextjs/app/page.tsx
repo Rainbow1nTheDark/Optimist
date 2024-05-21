@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { capitalizeFirstLetter } from "~~/utils/common/common";
 import {
   DappRating,
   DappRegistered,
@@ -120,24 +121,27 @@ const Home = () => {
             <p>{error}</p>
           ) : dapps && dapps.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {dapps.map(dapp => (
-                <div
-                  key={dapp.dappId}
-                  className="border rounded-lg p-4 shadow hover:shadow-lg transition-shadow flex flex-col items-center"
-                >
-                  <h3 className="font-semibold text-lg text-center">{dapp.name}</h3>
-                  <p className="text-center mb-4">{dapp.description}</p>
-                  <div className="text-red-500">{renderStars(dapp.averageRating ?? 0)}</div>
-                  <div className="flex justify-between items-center w-full mt-2">
-                    <a href={dapp.url} className="text-blue-500 hover:underline">
-                      Visit Site
-                    </a>
-                    <a href={`/rate-dapp?id=${dapp.id}`} className="text-blue-500 hover:underline">
-                      Rate This App
-                    </a>
+              {dapps
+                .slice()
+                .sort((a, b) => (b.averageRating ?? 0) - (a.averageRating ?? 0))
+                .map(dapp => (
+                  <div
+                    key={dapp.dappId}
+                    className="border rounded-lg p-4 shadow hover:shadow-lg transition-shadow flex flex-col items-center"
+                  >
+                    <h3 className="font-semibold text-lg text-center">{capitalizeFirstLetter(dapp.name)}</h3>
+                    <p className="text-center mb-4">{dapp.description}</p>
+                    <div className="text-red-500">{renderStars(dapp.averageRating ?? 0)}</div>
+                    <div className="flex justify-between items-center w-full mt-2">
+                      <a href={dapp.url} className="text-blue-500 hover:underline">
+                        Visit Site
+                      </a>
+                      <a href={`/rate-dapp?id=${dapp.id}`} className="text-blue-500 hover:underline">
+                        Rate This App
+                      </a>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           ) : (
             <div className="text-center mt-4">

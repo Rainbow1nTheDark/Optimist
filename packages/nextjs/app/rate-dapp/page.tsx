@@ -1,10 +1,34 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useWriteContract } from "wagmi";
 import deployedContracts from "~~/contracts/deployedContracts";
 import { DappRegistered, fetchGraphQLRegisteredDappByID } from "~~/utils/graphQL/fetchFromSubgraph";
+
+// Define the types for the Modal component props
+interface ModalProps {
+  isVisible: boolean;
+  onClose: () => void;
+  children: React.ReactNode;
+}
+
+const Modal: React.FC<ModalProps> = ({ isVisible, onClose, children }) => {
+  if (!isVisible) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+      <div className="bg-white border-2 border-red-500 p-4 rounded-lg">
+        <div className="flex justify-end">
+          <button onClick={onClose} className="text-red-500 font-bold">
+            X
+          </button>
+        </div>
+        <div>{children}</div>
+      </div>
+    </div>
+  );
+};
 
 const RateDapp = () => {
   const searchParams = useSearchParams();
@@ -12,10 +36,10 @@ const RateDapp = () => {
   const { data: hash, isPending, writeContract } = useWriteContract();
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState("");
-
   const [dappDetails, setDappDetails] = useState<DappRegistered | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,28 +62,30 @@ const RateDapp = () => {
     if (id) fetchData();
   }, [id]);
 
-  async function submitReview(e: React.FormEvent<HTMLFormElement>) {
+  const submitReview = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     console.log(`${comment} ${rating}`);
     if (dappDetails?.dappId) {
-      writeContract({
+      await writeContract({
         address: deployedContracts[11155420].DappRatingSystem.address,
         abi: deployedContracts[11155420].DappRatingSystem.abi,
         functionName: "addDappRating",
         args: [dappDetails.dappId, rating, comment],
       });
+
+      setIsModalVisible(true);
     } else {
       console.log(`Wrong ID: ${id}`);
     }
-  }
+  };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <form onSubmit={submitReview} className="flex flex-col items-center pt-10 w-full">
-      <div className="space-y-4 w-full max-w-md">
+    <div className="flex flex-col items-center pt-10 w-full">
+      <form onSubmit={submitReview} className="space-y-4 w-full max-w-md">
         {dappDetails ? (
           <div className="text-center">
             <h1 className="text-2xl font-bold mb-2">
@@ -119,9 +145,18 @@ const RateDapp = () => {
         >
           {isPending ? "Sending..." : "Submit Review"}
         </button>
-        {hash && <div>Transaction Hash: {hash}</div>}
-      </div>
-    </form>
+      </form>
+      <Modal isVisible={isModalVisible} onClose={() => setIsModalVisible(false)}>
+        {hash ? (
+          <div>
+            <p className="text-green-500 font-bold">Review Submitted!</p>
+            <p>Hash: {hash}</p>
+          </div>
+        ) : (
+          <p className="text-yellow-500 font-bold">Processing Request</p>
+        )}
+      </Modal>
+    </div>
   );
 };
 
